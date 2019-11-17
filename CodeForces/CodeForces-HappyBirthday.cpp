@@ -29,21 +29,11 @@ int main() {
 
         bool found = false;
         if (candles[0] < min_candles) {
-            for (int i = 1; i < 10;++i) {
-                if (candles[i] == 0) {
-                    cout << i << endl;
-                    found = true;
-                    break;
-                }
+            string age = "1";
+            for (int i = 0; i < candles[0] + 1;++i) {
+                age += "0";
             }
-
-            if (!found) {
-                string age = "1";
-                for (int i = 0; i < candles[0] + 1;++i) {
-                    age += "0";
-                }
-                cout << age << endl;
-            }
+            cout << age << endl;
             
         } else {
             string age = "";
