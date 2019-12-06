@@ -1,8 +1,7 @@
 #include <iostream>
 #include <vector>
 
-#pragma GCC Optmize("03")
-
+#pragma GCC optmize("03")
 
 using namespace std;
 
