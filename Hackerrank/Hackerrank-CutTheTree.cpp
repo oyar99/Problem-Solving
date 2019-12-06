@@ -1,3 +1,6 @@
+//This file only contains the functions used for solving the problem.
+//The main function is omitted for brevity.
+
 class graph {
     private:
         unordered_map<int, unordered_set<int>> list;
