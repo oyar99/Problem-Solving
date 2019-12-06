@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#pragma GCC Optmize("O3")
+#pragma GCC optimize("O3")
 #define int long long
 using namespace std;
 //URI 1492
