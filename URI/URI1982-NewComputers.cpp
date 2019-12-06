@@ -4,7 +4,6 @@
 #include <set>
 #include <cmath>
 #include <cstdio>
-
 #define int long long
 
 struct Point {
