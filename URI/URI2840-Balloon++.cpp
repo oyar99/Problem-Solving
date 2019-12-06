@@ -5,7 +5,6 @@ using namespace std;
 
 const double PI = 3.1415;
 
-
 int main() {
     #define int long long
     double R;
