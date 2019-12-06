@@ -10,7 +10,6 @@
 
 using namespace std;
 
-
 class graph {
     private:
         vector<vector<int>> matrix;
