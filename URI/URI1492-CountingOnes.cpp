@@ -4,14 +4,6 @@
 using namespace std;
 //URI 1492
 
-int count_ones(int n) {
-    int t = 0;
-    for (int i = 0; i < log2(n) + 1; ++i) {
-        if (n >> i & 1) ++t;
-    }
-    return t;
-}
-
 int count_ones_up_to(int n) {
     if (n == 0) return 0;
     if (n == 1) return 1;
