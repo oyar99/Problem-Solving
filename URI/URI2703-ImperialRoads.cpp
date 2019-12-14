@@ -4,41 +4,9 @@
 
 using namespace std;
 
-struct pair_hash {
-	template <class T1, class T2>
-	std::size_t operator () (const std::pair<T1, T2>& p) const {
-		auto h1 = std::hash<T1>{}(p.first);
-		auto h2 = std::hash<T2>{}(p.second);
-
-		return h1 ^ h2;
-	}
-};
-
 class graph {
     public:
         unordered_map<int, unordered_map<int, int>> list;
-    
-        void add_vertex(int u) {
-            list.insert({u, unordered_map<int, int>()});
-        }
-
-        void add_edge(int u, int v, int c) {
-            list[u].insert({v, c});
-            list[v].insert({u, c});
-        }
-
-        void remove_edge(int u, int v) {
-            list[u].erase(v);
-            list[v].erase(u);
-        }
-
-        int num_vertices() {
-            return list.size();
-        }
-
-        bool is_adjacent(int u, int v) {
-            return list[u].count(v) > 0;
-        }
 
         unordered_map<int, int> get_neighbours(int u) {
             return list[u];
@@ -53,34 +21,36 @@ public:
     vector<pair<Tree*, int>> children;
 };
 
+class Compare {
+    public:
+    bool operator() (const pair<int, pair<int, int>>& a, const pair<int, pair<int, int>>& b) {
+        return a.second.second > b.second.second;
+    }
+};
+
 
 pair<graph, int> minimum_spanning_tree(graph& g, int u) {
     graph tree;
-    int w = 0;
-    unordered_set<pair<int, int>, pair_hash> edges_added;
-    vector<pair<int, pair<int, int>>> edges;
-    tree.add_vertex(u);
-    while (g.num_vertices() != tree.num_vertices()) {
-        for (auto n: g.get_neighbours(u)) {
-            
-            if (edges_added.count({u, n.first}) > 0 || edges_added.count({n.first, u})) continue;
-            if (tree.list.count(n.first) > 0) continue;
-            edges.push_back({u, {n.first, n.second}});
-            push_heap(edges.begin(), edges.end(), [](const pair<int, pair<int, int>>& a, const pair<int, pair<int, int>>& b) {return a.second.second > b.second.second;});
+    int weight = 0;
+
+    priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>, Compare> q;
+    while (g.list.size() != tree.list.size()) {
+        for (auto& v: g.get_neighbours(u)) {
+            if (tree.list.count(v.first) > 0) continue;
+            q.push({u, {v.first, v.second}});
         }
-        pair<int, pair<int, int>> min_edge;
-        min_edge = edges.front();
-        pop_heap(edges.begin(), edges.end(), [](const pair<int, pair<int, int>>& a, const pair<int, pair<int, int>>& b) {return a.second.second > b.second.second;});
-        edges.pop_back();
-        if (tree.list.count(min_edge.first) > 0 && tree.list.count(min_edge.second.first) > 0) continue;
-        tree.add_vertex(min_edge.first);
-        tree.add_vertex(min_edge.second.first);
-        tree.add_edge(min_edge.first, min_edge.second.first, min_edge.second.second);
-        w += min_edge.second.second;
-        edges_added.insert({min_edge.first, min_edge.second.first});
-        u = min_edge.second.first;
+
+        auto w = q.top();
+        q.pop();
+        
+        if (tree.list.count(w.first) > 0 && tree.list.count(w.second.first) > 0) continue;
+        
+        tree.list[w.first][w.second.first] = w.second.second;
+        tree.list[w.second.first][w.first] = w.second.second;
+        weight += w.second.second;
+        u = w.second.first;
     }
-    return {tree, w};
+    return {tree, weight};
 }
 
 
@@ -89,16 +59,16 @@ Tree* graph_to_tree(graph& g, int root, vector<Tree*>& nodes) {
     queue<pair<Tree*,int>> q;
     unordered_set<int> visited;
     q.push({tree,root});
-
+    visited.insert(root);
     while (!q.empty()) {
         int w = q.front().second;
         Tree* t = q.front().first;
         t->id = w;
         nodes[w] = t;
         q.pop();
-        visited.insert(w);
-        for (auto n: g.get_neighbours(w)) {
+        for (auto& n: g.get_neighbours(w)) {
             if (visited.count(n.first) <= 0) {
+                visited.insert(n.first);
                 Tree* sub = new Tree();
                 sub->id = n.first;
                 if (sub->id == root) {
@@ -118,22 +88,42 @@ Tree* graph_to_tree(graph& g, int root, vector<Tree*>& nodes) {
     return tree;
 }
 
+void build_euler_tour(Tree* t, vector<pair<int, int>>& out_table, vector<int>& leaves) {
+    stack<Tree*> s;
+    unordered_set<int> visited;
+    unordered_map<int, int> inds;
+    int height = 0;
+    s.push(t);
+    visited.insert(t->id);
+    while (!s.empty()) {
+        auto v = s.top();
 
-int build_euler_tour(Tree * t ,vector<pair<int, int>>& out_table, int height) {
-    if (t->children.empty()) { 
-        out_table.push_back({t->id,height}); 
-    } else {
-        out_table.push_back({t->id, height});
-        int fixed_h = height;
-        for (auto child: t->children) {
-            ++height;
-            height = build_euler_tour(child.first, out_table, height);
-            out_table.push_back({t->id, fixed_h});
+        if (inds.count(v->id) <= 0) {
+            out_table.push_back({v->id, height});
+            inds[v->id] = height;
         }
-    }
-    return height;
-}
+        else {
+            out_table.push_back({v->id, inds[v->id]});
+        }
 
+
+        bool all = true;
+        for (auto& child: v->children) {
+            if (visited.count(child.first->id) <= 0) {
+                visited.insert(child.first->id);
+                s.push(child.first);
+                all = false;
+                break;
+            }
+        } 
+
+        if (all) {
+            s.pop();
+            leaves.push_back(v->id);
+        }
+        ++height;
+    }
+}
 
 int main() {
     ios_base::sync_with_stdio(false);
@@ -141,28 +131,24 @@ int main() {
     int N, R;
     cin >> N >> R;
     graph g;
-    for (int i = 1; i <= N;++i) {
-        g.add_vertex(i);
-    }
 
     for (int i = 0; i < R;++i) {
         int u, v, c;
         cin >> u >> v >> c;
-        g.add_edge(u, v, c);
+        g.list[u][v] = c;
+        g.list[v][u] = c;
     }
-    auto t1 = chrono::high_resolution_clock::now();
+
     auto tree = minimum_spanning_tree(g, 1);
-    auto t2 = chrono::high_resolution_clock::now();
-    auto dur = chrono::duration_cast<chrono::milliseconds>(t2 - t1).count();
-    cout << "SPANNING TREE: " << dur << endl;
-    vector<Tree*> nodes(tree.first.num_vertices() + 1, nullptr);
+    vector<Tree*> nodes(tree.first.list.size() + 1, nullptr);
     Tree* t = graph_to_tree(tree.first, 1, nodes);
     vector<pair<int, int>> euler_table;
-    vector<int> first_ocurrence(tree.first.num_vertices() + 1, -1);
-    build_euler_tour(t, euler_table, 0);
+    vector<int> first_ocurrence(tree.first.list.size() + 1, -1);
+    vector<int> leaves;
+    build_euler_tour(t, euler_table, leaves);
     vector<vector<int>> sparse_table(ceil(log2(euler_table.size()) + 1), vector<int>(euler_table.size() + 1));
-    vector<vector<int>> sparse_table_dists(ceil(log2(tree.first.num_vertices()) + 1), vector<int>(tree.first.num_vertices() + 1));
-    vector<vector<int>> sparse_table_ances(ceil(log2(tree.first.num_vertices()) + 1), vector<int>(tree.first.num_vertices() + 1));
+    vector<vector<int>> sparse_table_dists(ceil(log2(tree.first.list.size()) + 1), vector<int>(tree.first.list.size() + 1));
+    vector<vector<int>> sparse_table_ances(ceil(log2(tree.first.list.size()) + 1), vector<int>(tree.first.list.size() + 1));
     unordered_map<int, int> map;
     vector<int> logs(N+1);
 
@@ -170,33 +156,25 @@ int main() {
     for (int i = 2; i <= N; ++i) {
         logs[i] = logs[i / 2] + 1;
     }
-
-    for (auto e: euler_table) {
-        map[e.second] = e.first;
-    }
-
+    
     for (int i = 0; i < euler_table.size();++i) {
+        sparse_table[0][i] = euler_table[i].second;
+        map[euler_table[i].second] = euler_table[i].first;
+
         if (first_ocurrence[euler_table[i].first] != -1) continue;
         first_ocurrence[euler_table[i].first] = i;
     }
     
-    for (int i = 0; i < euler_table.size();++i) {
-        sparse_table[0][i] = euler_table[i].second;
-    }
-
-
     for (int i = 1; i < sparse_table.size(); ++i) {
         for (int j = 0; j + (1 << i) <= sparse_table[i].size();++j) {
             sparse_table[i][j] = min(sparse_table[i - 1][j], sparse_table[i - 1][j + (1 << (i - 1))]);
         }
     }
-
+    
+    auto t1 = chrono::high_resolution_clock::now();
     unordered_set<int> visited;
-    for (int u = 1; u <= N; ++u) {
-
-        if (visited.count(u) > 0) continue;
-
-        int w = u;
+    for (int u = 0; u < leaves.size(); ++u) {
+        int w = leaves[u];
         vector<int> ancestor;
         vector<int> path;
         vector<int> nodes_vis;
@@ -218,8 +196,10 @@ int main() {
                 sparse_table_ances[i][nodes_vis[j]] = sparse_table_ances[i-1][nodes_vis[j + (1 << (i-1))]];
             }
         }
-        
     }
+    auto t2 = chrono::high_resolution_clock::now();
+    int duration = chrono::duration_cast<chrono::milliseconds>(t2 - t1).count();
+    cout << "PREPROCESSING: " << duration << " milliseconds" << endl;
 
     int Q;
     cin >> Q;
@@ -249,6 +229,7 @@ int main() {
             int max_v = 0;
             int s = u;
             int r = v;
+
             while (nodes[s]->depth != nodes[map[lca]]->depth) {
                 max_u = max(max_u, sparse_table_dists[logs[(nodes[s]->depth - nodes[map[lca]]->depth)]][s]);  
                 s = sparse_table_ances[logs[(nodes[s]->depth - nodes[map[lca]]->depth)]][s];
