@@ -16,13 +16,11 @@ int main() {
         unordered_map<char, int> m;
 
         for (int i = 0; i < p.size();++i) m[p[i]]++;
-
-        unordered_map<char, int> c = m;
-
         
         string ans = "NO";
         for (int i = 0; i < h.size();++i) {
             int l = 0;
+            unordered_map<char, int> c = m;
             for (int j = i; j < h.size(); ++j) {
                 if (l == p.size()) {
                     ans = "YES";
@@ -33,7 +31,6 @@ int main() {
                     c[h[j]]--;
                     ++l;
                 } else {
-                    c = m;
                     break;
                 }
             }
