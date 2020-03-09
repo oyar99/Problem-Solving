@@ -2,7 +2,7 @@ struct Point {
     int x;
     int y;
 };
-
+//This is solved in O(nlgn) time.
 class Solution {
     void dfs(TreeNode * root, vector<pair<Point, int>>& out, int x, int y) {
         if (root == NULL) return;
@@ -33,7 +33,7 @@ public:
                 v.push_back(points[i].second);
             } else {
                 ans.push_back(v);
-                v.clear();
+                v.clear(); //O(1) time since v stores a primitive data type.
                 v.push_back(points[i].second);
             }
         }
