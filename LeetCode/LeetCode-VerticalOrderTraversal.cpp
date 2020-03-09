@@ -32,8 +32,7 @@ public:
             if (points[i-1].first.x == points[i].first.x) {
                 v.push_back(points[i].second);
             } else {
-                vector<int> t(v);
-                ans.push_back(t);
+                ans.push_back(v);
                 v.clear();
                 v.push_back(points[i].second);
             }
