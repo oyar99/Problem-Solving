@@ -1,7 +1,13 @@
 #include <bits/stdc++.h>
  
 using namespace std;
- 
+
+//O(n)
+/*
+We store the indices of the ocurrences of each number in a hashmap.
+Then, for each element vi, we check whether there exists another element vj such that 
+vi = vj and j > i + 1. This inner for loop only runs up to three times for each iteration.
+*/
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
