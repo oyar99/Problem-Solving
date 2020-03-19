@@ -36,7 +36,7 @@ public:
             
             --r;
         }
-        //Lenght of subarray [L..R]
+        //Length of subarray [L..R]
         return r - l + 1;
     }
 };
