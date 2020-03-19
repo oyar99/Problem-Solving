@@ -14,7 +14,7 @@ public:
         
         int l = 0;
         
-        //Finds the index l such that the subarray nums[0..l-1] is sorted
+        //Finds the index L such that the subarray nums[0..L-1] is sorted
         while (!min_heap.empty()) {
             int u = min_heap.front();
             pop_heap(min_heap.begin(), min_heap.end(), greater<int>());
