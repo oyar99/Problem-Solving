@@ -17,8 +17,8 @@ public:
         //Fills up the tables
         //O(nlgn)
         for (int i = 0; i < days.size(); ++i) {
-            week[i] = lower_bound(days.begin() + i, ::min(days.begin() + i + 7, days.end()), 7 + days[i]) - days.begin();
-            month[i] = lower_bound(days.begin() + i, ::min(days.begin() + i + 30, days.end()), 30 + days[i]) - days.begin();
+            week[i] = lower_bound(days.begin(), days.end(), 7 + days[i]) - days.begin();
+            month[i] = lower_bound(days.begin(), days.end(), 30 + days[i]) - days.begin();
         }
         
         //dp(i) corresponds to the minimum amount of money you need to spend to travel all days in range [i, n]
