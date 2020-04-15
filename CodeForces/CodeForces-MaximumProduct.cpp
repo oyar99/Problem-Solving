@@ -93,7 +93,7 @@ int main() {
     
     memset(memo, -1, sizeof(memo));
     
-    for (int i = 0; i < 25; ++i) {
+    for (int i = 0; i < 20; ++i) {
         for (int j: {0, 1}){
             for (int k: {0, 1}) {
                 for (int w: {0,1 }) {
