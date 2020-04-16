@@ -1,2 +1,5 @@
-# ProblemSolving
-This repo is intended for programming problems.
+# Algorithmic Problem Solving
+
+This repository gathers algorithms that were designed to solve a particular problem.
+The problems are divided by website.
+
