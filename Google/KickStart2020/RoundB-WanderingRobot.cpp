@@ -6,9 +6,10 @@ using namespace std;
 
 typedef long long ll;
 
-//This solution has a run time complexity of O(W*H) which results inefficient for large data sets.
 
 int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
 
     int T; cin >> T;
 
@@ -17,31 +18,47 @@ int main() {
         
         double dp[301][301];
         memset(dp, 0, sizeof(dp));
-        dp[H][W] = 1.0;
+        dp[1][1] = 1;
 
         auto is_inside = [&] (int x, int y) {
             return x >= U && x <= D && y >= L && y <= R;
         };
 
-        for (int i = H - 1; i >= 1; --i) {
-            if (is_inside(i, W)) break;
-            dp[i][W] = dp[i+1][W];
+        if (W == 1 || H == 1) {
+            printf("Case #%d: %.5f\n", t+1, 0.0f);
+            continue;
         }
 
-        for (int j = W - 1;j >= 1; --j) {
-            if (is_inside(H, j)) {
-                break;
+        double ans = 0;
+
+        for (int i = 2; i <= H; ++i) {
+            if (is_inside(i-1, 1)) dp[i][1] = 0; 
+            else dp[i][1] = 0.5 * dp[i-1][1];
+
+            if (is_inside(i, 1)) ans += dp[i][1];
+        }
+
+        for (int j = 2; j <= W; ++j) {
+            if (is_inside(1, j - 1)) dp[1][j] = 0;
+            else dp[1][j] = 0.5 * dp[1][j-1];
+
+            if (is_inside(1, j)) ans += dp[1][j];
+        }
+
+        for (int i = 2; i <= H; ++i) {
+            for (int j = 2; j <= W; ++j) {
+                double l = is_inside(i, j - 1) ? 0: (i == H ? 1:0.5) * dp[i][j-1];
+                double u = is_inside(i-1, j) ? 0: (j == W ? 1: 0.5) * dp[i-1][j];
+
+                dp[i][j] = l + u;
+                
+                if (is_inside(i, j)) {
+                    ans += dp[i][j];
+                }
             }
-            dp[H][j] = dp[H][j+1];
         }
 
-        for (int i = H - 1; i >= 1; --i) {
-            for (int j = W - 1; j >= 1; --j) {
-                if (is_inside(i, j)) continue;
-                dp[i][j] = dp[i+1][j] * 0.5 + dp[i][j+1] * 0.5;
-            }
-        }
 
-        printf("Case #%d: %.6f\n", t+1, dp[1][1]);
+        printf("Case #%d: %.5f\n", t+1, 1 - ans);
     }
 }
