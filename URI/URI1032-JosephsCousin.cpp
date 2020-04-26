@@ -1,4 +1,4 @@
-#pragma optimize("O3")
+#pragma GCC optimize("O3")
 
 #include <bits/stdc++.h>
 
@@ -48,8 +48,8 @@ int main() {
             int d = distance(people.begin(), it);
 
             int move = ((d + primes[i]) % people.size()) - d - 1;
-
-            for (int i = 0; i < abs(move); ++i) {
+            int abs_move = abs(move);
+            for (int i = 0; i < abs_move; ++i) {
                 if (move < 0) {
                     if (it == people.begin()) it = --people.end();
                     else it = prev(it, 1);
