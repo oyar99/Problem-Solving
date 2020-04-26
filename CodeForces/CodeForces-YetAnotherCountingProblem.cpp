@@ -9,19 +9,6 @@ int gcd(int a, int b) {
     return gcd(b, a % b);
 }
 
-ll largest_i(int b, ll f, ll w) {
-    ll left = 0;
-    ll right = 1e18+100;
-
-    while (left < right) {
-        ll mid = left + (right - left) / 2;
-        if (mid > w / (b * f)) right = mid;
-        else left = mid + 1;
-    }
-    return left - 1;
-}
-
-
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -39,7 +26,7 @@ int main() {
 
             ll p = 0;
             
-            ll i = largest_i(b, f, r);
+            ll i = r / (b * f);
 
             p = b * f * i;
 
@@ -52,7 +39,7 @@ int main() {
 
             R += m;
 
-            ll j = largest_i(b, f, l - 1);
+            ll j = (l-1) / (b * f);
 
             p = b * f * j;
 
