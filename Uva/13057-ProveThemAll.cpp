@@ -79,13 +79,14 @@ int scc(graph& g, int n) {
 
     unordered_map<int, int> deg;
 
+    for (int i = 0; i < count; ++i) deg[i] = 0;
+
     for (int i = 0; i < count; ++i) {
-        deg[i] = 0;
         for (int j: t.adj[i]) {
             deg[j]++;
         }
     }
-    
+
     int d = 0;
 
     for (int i = 0; i < count; ++i) {
