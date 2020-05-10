@@ -6,7 +6,7 @@
 using namespace std;
 
 class graph {
-    //adj[u][v] indicates and edge from u to v where adj[u][v].first is the flow going through that edge and adj[u][v].second is the capacity of the edge.
+    //adj[u][v] indicates an edge from u to v where adj[u][v].first is the flow going through that edge and adj[u][v].second is the capacity of the edge.
     vector<unordered_map<int, pair<int, int>>> adj;
 
     public:
