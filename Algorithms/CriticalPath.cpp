@@ -1,11 +1,11 @@
 /**
  * Calculates the critical path of a set of tasks. 
- * N is the number of activities. (Including the start and the end activity)
- * M is the number of dependencies.
+ * N is the number of events (Including the start and the end event)
+ * M is the number of activities.
  * Each activity is described as u -> v with duration t. 
  * 
- * The start activity is the node with index 0
- * The end activity is the node with index N - 1
+ * The start event is the node with index 0
+ * The end event is the node with index N - 1
  * 
  * Time Complexity: O((V+E)^2)
  * 
