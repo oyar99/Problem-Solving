@@ -19,7 +19,6 @@ public:
         while (i < T.size()) {
             T[i] += val;
             i = i + (i & -i);
-            cout << "updating " << endl;
         }
     }
     
