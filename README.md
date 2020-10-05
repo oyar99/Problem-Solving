@@ -1,6 +1,9 @@
 # Algorithmic Problem Solving
 
-This repository gathers algorithms that were designed to solve a particular problem.
+This project gathers a collection of algorithms varying from binary search implementations to complex graph theory.
+Solutions are implemented in `C++` and/or `Python`.
+
+# Project Structure
 
 * [Google](/Google)
   * [KickStart](/Google/KickStart)
