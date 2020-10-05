@@ -15,7 +15,7 @@ This repository gathers algorithms that were designed to solve a particular prob
   * [ICPC2020LatinAmerica](/CodeForces/ICPC2020LatinAmerica)
   * [Others](/CodeForces/Others)
 * [LeetCode](/LeetCode)
-  * [AdHoc)](/LeetCode/AdHoc)
+  * [AdHoc](/LeetCode/AdHoc)
   * [BinarySearch](/LeetCode/BinarySearch)
   * [DP](/LeetCode/DP)
   * [GraphTheory](/LeetCode/GraphTheory)
