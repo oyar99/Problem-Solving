@@ -1,7 +1,5 @@
 class ParkingSystem {
-    int b;
-    int m;
-    int s;
+    int b, m, s;
 public:
     ParkingSystem(int big, int medium, int small) : b(big), m(medium), s(small) {}
     
