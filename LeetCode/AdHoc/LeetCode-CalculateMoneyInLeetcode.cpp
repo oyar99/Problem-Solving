@@ -6,6 +6,9 @@ struct Solution {
         return x?f(b,x-1)+x*b:0;
     }
     
+    // Calculate money in leet code bank
+    // Time Complexity: O(n/7)
+    // Space Complexity: O(1)
     int totalMoney(int n) {
         // The total amount of money that will be there at the end of the nth day can be computed by this algo:
         
