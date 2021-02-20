@@ -10,6 +10,6 @@ struct Solution {
         // 3. Substract (Σ i (from i = 1 to p)) * 7 from m. (This refers to the extra amount of money that is included in step 2).
         // 4. Substract the money for the days of the last week which come after the nth day.
         int p = n%d?n/d:n/d-1;
-        return ((((d+p)*(d+p+1)>>1)-(p*(p+1)>>1))*(p+1))-((p*(p+1)>>1)*7)-(n%d?((d+p)*(d+p+1)>>1)-(((n%d)+p)*((n%d)+p+1)>>1):0);
+        return ((((d+p)*(d+p+1)>>1)-(p*(p+1)>>1))*(p+1))-((p*(p+1)>>1)*d)-(n%d?((d+p)*(d+p+1)>>1)-(((n%d)+p)*((n%d)+p+1)>>1):0);
     }
 };
