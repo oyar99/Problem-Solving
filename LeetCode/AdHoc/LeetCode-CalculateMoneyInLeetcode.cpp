@@ -7,7 +7,7 @@ struct Solution {
     }
     
     // Calculate money in leet code bank
-    // Time Complexity: O(n/7)
+    // Time Complexity: O(n/d)
     // Space Complexity: O(1)
     int totalMoney(int n,int d=7) {
         // The total amount of money that will be there at the end of the nth day can be computed by this algo:
