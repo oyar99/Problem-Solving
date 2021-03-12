@@ -2,6 +2,9 @@ class Solution {
 public:
     bool hasAllCodes(const string& s, int k) {
         
+        // Time: O(nk+2^k)
+        // Space: O(2^k)
+        
         int n = s.size();
         
         bool seen [1 << k];
