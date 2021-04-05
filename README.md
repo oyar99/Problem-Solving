@@ -43,3 +43,4 @@ Solutions are implemented in `C++` and/or `Python`.
   * [DP](/SPOJ/DP)
 * [Kattis](/Kattis)
   * [DP](/Kattis/DP)
+  * [Math](/Kattis/Math)
