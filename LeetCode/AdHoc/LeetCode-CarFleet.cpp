@@ -28,7 +28,7 @@ public:
                 s.pop();
             }
             
-            if (i != n - 1 && s.empty()) ++ groups;
+            if (i != n - 1 && s.empty()) ++groups;
             
             s.push(i);
         }
