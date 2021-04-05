@@ -41,3 +41,5 @@ Solutions are implemented in `C++` and/or `Python`.
   * [GraphTheory](/Hackerrank/GraphTheory)
 * [SPOJ](/SPOJ)
   * [DP](/SPOJ/DP)
+* [Kattis](/Kattis)
+  * [DP](/Kattis/DP)
