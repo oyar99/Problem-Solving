@@ -18,7 +18,6 @@ public:
         
         for (int i = 0; i < n; ++i) {
             t[i] = (double)(target - v[i].first) / v[i].second;
-            
         }
         
         stack<int> s;
