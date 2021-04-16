@@ -1,24 +1,19 @@
 class Solution {
 public:
-    string removeDuplicates(string s, int k) {
+    string removeDuplicates(const string& s, int k) {
         
         list<char> w;
         
-        for (int i = 0; i < s.size(); ++i) {
+        for (int i = 0; i < s.size(); ++i)
             w.push_back(s[i]);
-        }
         
         stack<int> st;
         int r = 1;
         
         st.push(r);
         for (auto it = next(w.begin()); it != w.end();) {
-            if (*it == *prev(it)) {
-                ++r;
-            } else {
-                st.push(r);
-                r = 1;
-            }
+            if (*it == *prev(it)) ++r;
+            else st.push(r),r = 1;
             
             if (r == k) {
                 auto l = it;
@@ -33,9 +28,8 @@ public:
         
         string ans;
         
-        for (auto it = w.begin(); it != w.end(); ++it) {
+        for (auto it = w.begin(); it != w.end(); ++it)
             ans.push_back(*it);
-        }
         
         return ans;
     }
