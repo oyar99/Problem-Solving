@@ -15,8 +15,7 @@ public:
         int dp[1001];
         memset(dp, 0, sizeof(dp));
         
-        int ans = 1;
-        dp[n - 1] = 1;
+        int ans = dp[n - 1] = 1;
         
         // O(n^2*m)
         for (int i = n - 2; i >= 0; --i) {
@@ -27,9 +26,6 @@ public:
                 
                 if (words[j].size() == words[i].size()) continue;
                 if (words[j].size() - words[i].size() > 1) break;
-                
-                int count[27];
-                memset(count, 0, sizeof(count));
                 
                 int l = 0;
                 
@@ -50,7 +46,5 @@ public:
         }
         
         return ans;
-        
-        
     }
 };
