@@ -75,10 +75,7 @@ class Solution {
         return true;
     }
     
-    void solve(vector<string>& board, int n, int k, vector<vector<string>>& boards) {
-        
-        if (k > n) return;
-        
+    void solve(vector<string>& board, int n, int k, vector<vector<string>>& boards) {        
         if (k == n) {
             boards.push_back(board);
             return;
