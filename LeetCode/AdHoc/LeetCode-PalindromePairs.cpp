@@ -7,12 +7,14 @@ public:
         Assume |w(i)| >= |w(j)|
 
         w(i) + w(j) is a palindrome
-	        iff w(j) is equal to a suffix of w(i) and the correspoding prefix is a palindrome
+	        iff w(j) is equal to a suffix of w(i) and the corresponding prefix is a palindrome
  
         This also holds when |w(j)| > |w(i)|
         
         */
-        
+	    
+	    
+        // O(n^2K)
         int n = words.size();
         
         vector<vector<int>> ans;
