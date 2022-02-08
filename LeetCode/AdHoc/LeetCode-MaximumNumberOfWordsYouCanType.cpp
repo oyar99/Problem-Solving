@@ -5,18 +5,11 @@ public:
         
         vector<bool> broken(26);
         
-        for (const char& i : brokenLetters) broken[i - 'a'] = true;
+        for (const char& i : brokenLetters) broken[i - 'a'] = 1;
         
-        bool complete = true;
+        bool complete = 1;
         
-        for (const char& c : text+' ') {
-            if (c == ' ') {
-                if (complete) ++count;
-                complete = true;
-                continue;
-            }
-            complete = complete && !broken[c - 'a'];
-        }
+        for (const char& c : text+' ') count += complete && c == ' ',complete = (complete || c == ' ') && (c == ' ' || !broken[c - 'a']);
         
         return count;
     }
