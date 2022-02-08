@@ -1,16 +1,1 @@
-class Solution {
-public:
-    int canBeTypedWords(const string& text, const string& brokenLetters) {
-        int count = 0;
-        
-        vector<bool> broken(26);
-        
-        for (const char& i : brokenLetters) broken[i - 'a'] = 1;
-        
-        bool complete = 1;
-        
-        for (const char& c : text+' ') count += complete && c == ' ',complete = (complete || c == ' ') && (c == ' ' || !broken[c - 'a']);
-        
-        return count;
-    }
-};
+struct Solution{int canBeTypedWords(string&t,string&b){int a=0;vector<bool>d(26);bool p=1;for (char&i:b)d[i-'a']=1;for (char&c:t+' ')a+=p&&c==' ',p=(p||c==' ')&&(c==' '||!d[c-'a']);return a;}};
