@@ -25,7 +25,7 @@ public:
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder, vector<int>& m, int px, int l, int r) {
         int n = preorder.size();
         
-        if (l > r || px >= n) {
+        if (l > r) {
             return nullptr;
         }
         
