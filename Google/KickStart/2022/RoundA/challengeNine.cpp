@@ -11,6 +11,8 @@ int add_digits(const string& s) {
     if (digits >= 10) {
         return add_digits(to_string(digits));
     }
+    
+    return digits;
 }
 
 int main() {
