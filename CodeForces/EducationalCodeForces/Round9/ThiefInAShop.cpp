@@ -59,7 +59,7 @@ vector<cd> fft(vector<cd>& a, int wf = 1) {
 int main() {
     int n; int k; cin >> n >> k;
     
-    vector<cd> v(1<<11);
+    vector<cd> v(1<<20);
     
     for (int i = 0; i < n; ++i) {
         int x; cin >> x;
@@ -71,7 +71,7 @@ int main() {
     for (int i = 0; i < k - 1; ++i) {
         v = fft(v);
 
-        for (int i = 0; i < (1<<11); ++i) {
+        for (int i = 0; i < (1<<20); ++i) {
             v[i] *= pv[i];
         }
 
@@ -79,7 +79,7 @@ int main() {
     }
     
     
-    for (int i = 0; i < (1<<11); ++i) {
+    for (int i = 0; i < (1<<20); ++i) {
         if (((int)round(v[i].real())) != 0) {
             cout << i << " ";
         }
